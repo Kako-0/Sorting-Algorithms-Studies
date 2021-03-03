@@ -1,7 +1,7 @@
 package src.Merges;
 
 public class Standard {
-     public static int[] mergeSort(int[] array) {
+    public static int[] mergeSort(int[] array) {
 		int[] temp = new int[array.length];
 		return mergeMain(array, temp, 0, array.length - 1);
 	}
