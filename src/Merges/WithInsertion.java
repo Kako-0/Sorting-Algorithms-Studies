@@ -5,16 +5,20 @@ public class WithInsertion {
         int i, j;
         int chave;
 
-        // Um for que pecorre todo o array
+        // Um for que pecorre todo o sub-array
         for (j = esq; j < dir; j++) {
-            // chave tem o primeiro valor do array
+            // chave tem o primeiro valor do sub-array
             chave = array[j];
 
+			//Tamanho do sub-array
             i = j - 1;
+			//Enquanto a chave for menor que o elemento que está na
+			//posição i, a função "empurra" esses elementos pra frente
             while (i >= 0 && array[i] > chave) {
                 array[i + 1] = array[i];
                 i--;
             }
+			//Quando a chave for maior ele troca de posição com esse elemento
             array[i + 1] = chave;
         }
 		
