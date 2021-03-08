@@ -1,20 +1,22 @@
 package src.Merges;
 
-public class WithInsertion {
-    private static int[] insertionSort(int[] array, int esq, int dir) {
+import java.util.Arrays;
+
+public class WithInsertion<T extends Comparable<T>> {
+    private  T[] insertionSort(T[] array, int esq, int dir) {
         int i, j;
-        int chave;
+        T chave;
 
         // Um for que pecorre todo o sub-array
-        for (j = esq; j < dir; j++) {
+        for (j = esq; j < dir+1; j++) {
             // chave tem o primeiro valor do sub-array
             chave = array[j];
 
 			//Tamanho do sub-array
-            i = j - 1;
+            i = j-1;
 			//Enquanto a chave for menor que o elemento que está na
 			//posição i, a função "empurra" esses elementos pra frente
-            while (i >= 0 && array[i] > chave) {
+            while ((i >= 0) && (array[i].compareTo(chave) >= 0)) {
                 array[i + 1] = array[i];
                 i--;
             }
@@ -25,12 +27,12 @@ public class WithInsertion {
         return array;
     }
     
-    public static int[] mergeSort(int[] array) {
-		int[] temp = new int[array.length];
+    public  T[] mergeSort(T[] array) {
+		T[] temp = Arrays.copyOfRange(array, 0, array.length);
 		return mergeMain(array, temp, 0, array.length - 1);
 	}
 	//Divide
-	private static int[] mergeMain(int[] array, int[] T, int esq, int dir) {
+	private  T[] mergeMain(T[] array, T[] T, int esq, int dir) {
 		int meio;
 		//Se a divisão do array chegar a 15 elementos ou menos, aplica-se o método insertionSort()
 		if (dir - esq <= 15) {
@@ -45,7 +47,7 @@ public class WithInsertion {
 	}
 
 	//Conquista
-	private static void merge(int[] array, int[] T, int esqPos, int dirPos, int dirFim) {
+	private  void merge(T[] array, T[] T, int esqPos, int dirPos, int dirFim) {
 		//último índice do sub-array esquerdo
 		int esqFim = dirPos - 1;
 		//Posição inicial do array temporário
@@ -58,7 +60,7 @@ public class WithInsertion {
 		// se a < b, então a vai pro array temporário e o b passa a comparar c
 		//e assim por diante
 		while (esqPos <= esqFim && dirPos <= dirFim) {
-			if (array[esqPos] <= array[dirPos]) {
+			if (array[esqPos].compareTo(array[dirPos]) <= 0) {
 				T[tempPos++] = array[esqPos++];
 			} else {
 				T[tempPos++] = array[dirPos++];
