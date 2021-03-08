@@ -1,13 +1,15 @@
 package src.Merges;
 
-public class Standard {
-    public static int[] mergeSort(int[] array) {
-		int[] temp = new int[array.length];
+import java.util.Arrays;
+
+public class Standard <T extends Comparable<T>> {
+    public T[] mergeSort(T[] array) {
+		T[] temp = Arrays.copyOfRange(array, 0, array.length);
 		return mergeMain(array, temp, 0, array.length - 1);
 	}
 
 	//Divide
-	private static int[] mergeMain(int[] array, int[] T, int esq, int dir) {
+	private T[] mergeMain(T[] array, T[] T, int esq, int dir) {
 		int meio;
 		if (esq < dir) {
 			meio = (esq + dir) / 2;
@@ -19,7 +21,7 @@ public class Standard {
 	}
 
 	//Conquista
-	private static void merge(int[] array, int[] T, int esqPos, int dirPos, int dirFim) {
+	private void merge(T[] array, T[] T, int esqPos, int dirPos, int dirFim) {
 		//último índice do sub-array esquerdo
 		int esqFim = dirPos - 1;
 		//Posição inicial do array temporário
@@ -32,7 +34,7 @@ public class Standard {
 		// se a < b, então a vai pro array temporário e o b passa a comparar c
 		//e assim por diante
 		while (esqPos <= esqFim && dirPos <= dirFim) {
-			if (array[esqPos] <= array[dirPos]) {
+			if (array[esqPos].compareTo(array[dirPos]) <= 0) {
 				T[tempPos++] = array[esqPos++];
 			} else {
 				T[tempPos++] = array[dirPos++];
