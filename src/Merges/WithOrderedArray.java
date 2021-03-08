@@ -1,27 +1,29 @@
 package src.Merges;
 
-public class WithOrderedArray {
-    public static int[] mergeSort(int[] array) {
-		int[] temp = new int[array.length];
+import java.util.Arrays;
+
+public class WithOrderedArray <T extends Comparable<T>> {
+    public  T[] mergeSort(T[] array) {
+		T[] temp = Arrays.copyOfRange(array, 0, array.length);
 		return mergeMain(array, temp, 0, array.length - 1);
 	}
 	
 	//Divide
-	private static int[] mergeMain(int[] array, int[] T, int esq, int dir) {
+	private  T[] mergeMain(T[] array, T[] T, int esq, int dir) {
 		int meio;
 		if (esq < dir) {
 			meio = (esq + dir) / 2;
 			mergeMain(array, T, esq, meio);
 			mergeMain(array, T, meio + 1, dir);
 			//Ele verifica se os sub-arrays já estão ordenados
-            if (!(array[meio] <= array[meio + 1])) {
+            if (!(array[meio].compareTo(array[meio + 1]) <= 0) ) {
                 merge(array, T, esq, meio + 1, dir);   
             }
 		}
 		return array;
 	}
 	//Conquista
-	private static void merge(int[] array, int[] T, int esqPos, int dirPos, int dirFim) {
+	private  void merge(T[] array, T[] T, int esqPos, int dirPos, int dirFim) {
 		//último índice do sub-array esquerdo
 		int esqFim = dirPos - 1;
 		//Posição inicial do array temporário
@@ -34,7 +36,7 @@ public class WithOrderedArray {
 		// se a < b, então a vai pro array temporário e o b passa a comparar c
 		//e assim por diante
 		while (esqPos <= esqFim && dirPos <= dirFim) {
-			if (array[esqPos] <= array[dirPos]) {
+			if (array[esqPos].compareTo(array[dirPos]) <= 0) {
 				T[tempPos++] = array[esqPos++];
 			} else {
 				T[tempPos++] = array[dirPos++];
