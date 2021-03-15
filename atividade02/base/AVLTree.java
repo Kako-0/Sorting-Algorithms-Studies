@@ -1,5 +1,3 @@
-package base;
-
 public class AVLTree<Key extends Comparable<Key>, Value> {
 
     private class Node {

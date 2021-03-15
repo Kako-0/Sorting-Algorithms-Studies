@@ -1,5 +1,3 @@
-package base;
-
 public class RBTree<Key extends Comparable<Key>, Value>
 {	
 	

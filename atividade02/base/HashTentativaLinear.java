@@ -1,16 +1,16 @@
-package base;
-
 public class HashTentativaLinear<Key, Value> {
 	private int N; // numero de pares de chaves na tabela
 	private int M = 16; // Tamanho da tabela hash com tratamento linear
 	private Key[] keys; // the keys
 	private Value[] vals; // the values
 	
+	//Constructor com a tabela de tamanho padrão igual a 16
 	public HashTentativaLinear() {
 		keys = (Key[]) new Object[M];
 		vals = (Value[]) new Object[M];
 	}
 	
+	//Constructor com a tabela de tamanho igual a cap
 	public HashTentativaLinear(int cap) {
 		keys = (Key[]) new Object[cap];
 		vals = (Value[]) new Object[cap];
