@@ -5,12 +5,14 @@ public class HashTentativaLinear<Key, Value> {
 	private Value[] vals; // the values
 	
 	//Constructor com a tabela de tamanho padrão igual a 16
+	@SuppressWarnings("unchecked")
 	public HashTentativaLinear() {
 		keys = (Key[]) new Object[M];
 		vals = (Value[]) new Object[M];
 	}
 	
 	//Constructor com a tabela de tamanho igual a cap
+	@SuppressWarnings("unchecked")
 	public HashTentativaLinear(int cap) {
 		keys = (Key[]) new Object[cap];
 		vals = (Value[]) new Object[cap];
