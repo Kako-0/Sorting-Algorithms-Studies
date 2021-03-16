@@ -64,11 +64,14 @@ public class HashTentativaLinear<Key, Value> {
 		if (N >= M/2) 
 			resize(2*M); // double M 
 		
+		//Enquanto keys[i] != null, incrementa +1(tentativa linear)
 		for (i = hash(key); keys[i] != null; i = (i + 1) % M)
+			//quando a key for igual a keys[i], atribue o value no value[i]
+			//Essa função sobrescreve o value caso a keys sejam iguais
 			if (keys[i].equals(key)) { 
 				vals[i] = val; 
 				return; 
-				}
+			}
 		keys[i] = key;
 		vals[i] = val;
 		N++;
@@ -87,13 +90,16 @@ public class HashTentativaLinear<Key, Value> {
 			return;
 			
 		int i = hash(key);
+		//usa a tentativa linear para encontrar a key certa
 		while (!key.equals(keys[i]))
 			i = (i + 1) % M;
 		
+		//Deleta da tabela
 		keys[i] = null;
 		vals[i] = null;
 		i = (i + 1) % M;
 		
+		//?????
 		while (keys[i] != null){
 			Key keyToRedo = keys[i];
 			Value valToRedo = vals[i];
