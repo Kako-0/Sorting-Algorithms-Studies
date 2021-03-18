@@ -76,6 +76,48 @@ public class HashTentativaLinear<Key, Value> {
 		vals[i] = val;
 		N++;
 	}
+
+//////////// Hashing duplo ////////////////////////////////////////////////
+	private int hash2(Key key){ 
+		return (key.hashCode() & 0x7fffffff) % (M - 1); 
+	}
+
+	//Verifica se o tamanho da tabela hash é potência de 2
+	private boolean isPow2(int m){
+		double pow2 = (Math.log10(m) / Math.log10(2));
+		int interpow = (int) pow2;
+		return pow2 == interpow;
+	}
+
+	public void putDuplo(Key key, Value val) {
+		//Verifica restrições, se false não se faz o método
+		if(!isPow2(M)) {
+			System.out.println("Invalid Operation!");
+			System.out.print("Conditions not applied: ");
+			System.out.println("The length of hash table is not potency of 2.");
+
+		}else {
+			int i = 0;
+			int h1;
+			int h2 = hash2(key) + 1;
+			//Incrementa + 1 caso o segundo hashing for par
+			int k = (h2 % 2 == 0) ? h2 + 1 : h2; 
+
+			if (N >= M/2) 
+				resize(2*M); // double M
+			
+			for (h1 = hash(key); keys[h1] != null; h1 = (h1 + i * k) % M){
+				i++;
+				if (keys[h1].equals(key)) { 
+					vals[h1] = val; 
+					return; 
+				}
+			}
+			keys[h1] = key;
+			vals[h1] = val;
+			N++;	
+		}
+	}
 	
 	/**
 	 * Remove um objeto do Hash
