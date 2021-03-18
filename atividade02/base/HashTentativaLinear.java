@@ -2,7 +2,7 @@ public class HashTentativaLinear<Key, Value> {
 	private int N; // numero de pares de chaves na tabela
 	private int M = 16; // Tamanho da tabela hash com tratamento linear
 	private Key[] keys; // the keys
-	private Value[] vals; // the values
+	public Value[] vals; // the values
 	
 	//Constructor com a tabela de tamanho padrão igual a 16
 	@SuppressWarnings("unchecked")
@@ -139,9 +139,10 @@ public class HashTentativaLinear<Key, Value> {
 		//Deleta da tabela
 		keys[i] = null;
 		vals[i] = null;
+		//Pega o próximo índice para verificar se possue o mesmo hash
 		i = (i + 1) % M;
 		
-		//?????
+		//Algoritmo que deleta fisicamente e decrementa as keys na tabela se possível
 		while (keys[i] != null){
 			Key keyToRedo = keys[i];
 			Value valToRedo = vals[i];
