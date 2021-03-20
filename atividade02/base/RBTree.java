@@ -24,14 +24,15 @@ public class RBTree<Key extends Comparable<Key>, Value>
     protected Node raiz;
 
 	private boolean isRed(Node h) {
-	
+		return false;
 	}
 	
 	private boolean isBlack(Node h) {
 		// Implementar método que verifica se o nó é preto
+		return false;
 	}
 	
-	 public int size() {
+	public int size() {
         return size(raiz);
     }
 
@@ -47,12 +48,12 @@ public class RBTree<Key extends Comparable<Key>, Value>
         return size(raiz) == 0;
     }
 	
-	 /**
+	/**
 	  * Rotação à equerda
 	  * @param node
 	  * @return
-	  */
-	 protected Node rotacaoEsquerda(Node no) {
+	*/
+	protected Node rotacaoEsquerda(Node no) {
         if (no == null || no.dir == null) {
             return no;
         }
@@ -75,7 +76,7 @@ public class RBTree<Key extends Comparable<Key>, Value>
 	 * Implementar o esse método
 	 * @param h
 	 * @return
-	 */
+	*/
 	private Node rotacaoDireita(Node h) {
 		// Implementar método que aplica a rotação à direita.
 		return null;
@@ -89,14 +90,13 @@ public class RBTree<Key extends Comparable<Key>, Value>
 	 * Insere um novo nó
 	 * @param key
 	 * @param val
-	 */
+	*/
 	public void insere(Key key, Value val){ 
 		raiz = insere(raiz, key, val);
 		raiz.cor = BLACK;
 	}
 	
-	private Node insere(Node h, Key key, Value val)
-	{
+	private Node insere(Node h, Key key, Value val){
 		if (h == null) // Do standard insert, with red link to parent.
 			return new Node(key, val, 1, RED);
 		
