@@ -24,7 +24,8 @@ public class RBTree<Key extends Comparable<Key>, Value>
     protected Node raiz;
 
 	private boolean isRed(Node h) {
-		return false;
+		if (h == null) return false;
+        return (h.cor == RED);
 	}
 	
 	private boolean isBlack(Node h) {
@@ -79,6 +80,21 @@ public class RBTree<Key extends Comparable<Key>, Value>
 	*/
 	private Node rotacaoDireita(Node h) {
 		// Implementar método que aplica a rotação à direita.
+		if ( h == null || h.esq == null) {
+			return h;
+		}
+
+		Node novaRaiz = h.esq;
+
+		h.esq = novaRaiz.dir;
+		novaRaiz.dir = h;
+
+		novaRaiz.cor = h.cor;
+        novaRaiz.cor = RED;
+
+		novaRaiz.size = h.size;
+        novaRaiz.size = size(h.esq) + 1 + size(h.dir);
+
 		return null;
 	}
 	private void trocaCor(Node h) {
