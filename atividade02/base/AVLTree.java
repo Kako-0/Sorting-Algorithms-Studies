@@ -64,8 +64,19 @@ public class AVLTree<Key extends Comparable<Key>, Value> {
     }
 
     private Node rotacaoDireita(Node no) {
-        return null;
     	//IMPLEMENTAR
+        if (no == null || no.esq == null) {
+            return no;
+        }
+        Node newRoot = no.esq;
+
+        no.esq = newRoot.dir;
+        newRoot.dir = no;
+
+        no.altura = 1 + Math.max(altura(no.esq), altura(no.dir));
+        newRoot.altura = 1 + Math.max(altura(newRoot.esq), altura(newRoot.dir));
+        
+        return newRoot;
     }
 
     public void put(Key chave, Value valor) {
