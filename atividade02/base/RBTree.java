@@ -65,7 +65,7 @@ public class RBTree<Key extends Comparable<Key>, Value>
         novaRaiz.esq = no;
 
         novaRaiz.cor = no.cor;
-        novaRaiz.cor = RED;
+        no.cor = RED;
 
         novaRaiz.size = no.size;
         novaRaiz.size = size(no.esq) + 1 + size(no.dir);
@@ -90,12 +90,12 @@ public class RBTree<Key extends Comparable<Key>, Value>
 		novaRaiz.dir = h;
 
 		novaRaiz.cor = h.cor;
-        novaRaiz.cor = RED;
+        h.cor = RED;
 
 		novaRaiz.size = h.size;
         novaRaiz.size = size(h.esq) + 1 + size(h.dir);
 
-		return null;
+		return novaRaiz;
 	}
 	private void trocaCor(Node h) {
 		// Implementar método que troca as cores.
@@ -139,15 +139,21 @@ public class RBTree<Key extends Comparable<Key>, Value>
 		return h;
 	}
 
-	private void preOrder(Node tree) {
-        if(tree != null) {
-            System.out.print(tree.chave+" "+
-								isRed(tree) != null?"red":"black");
-            preOrder(tree.esq);
-            preOrder(tree.dir);
-        }
-    }
-	public void preOrder(){
-		preOrder(raiz);
-	}
+	// private void preOrder(Node tree) {
+	// 	if(tree != null) {
+    //         System.out.println(toString(tree));
+    //         preOrder(tree.esq);
+    //         preOrder(tree.dir);
+    //     }
+    // }
+	// public void preOrder(){
+	// 	preOrder(raiz);
+	// }
+
+	// public String toString(Node h) {
+	// 	return "Node{" +
+	// 			"color=" + h.cor +
+	// 			", key=" + h.chave +
+	// 			'}';
+	// }
 }
