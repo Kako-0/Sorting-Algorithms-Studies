@@ -29,7 +29,7 @@ public class RBTree<Key extends Comparable<Key>, Value>
 	}
 	
 	private boolean isBlack(Node h) {
-		if (h == null) return BLACK;
+		if (h == null) return true;
         return (h.cor == BLACK);
 	}
 	
