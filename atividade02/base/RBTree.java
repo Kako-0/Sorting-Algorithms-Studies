@@ -30,7 +30,7 @@ public class RBTree<Key extends Comparable<Key>, Value>
 	
 	private boolean isBlack(Node h) {
 		if (h == null) return BLACK;
-        return (h.cor == RED);
+        return (h.cor == BLACK);
 	}
 	
 	public int size() {
@@ -137,5 +137,17 @@ public class RBTree<Key extends Comparable<Key>, Value>
 		
 		h.size = size(h.esq) + size(h.dir) + 1;
 		return h;
+	}
+
+	private void preOrder(Node tree) {
+        if(tree != null) {
+            System.out.print(tree.chave+" "+
+								isRed(tree) != null?"red":"black");
+            preOrder(tree.esq);
+            preOrder(tree.dir);
+        }
+    }
+	public void preOrder(){
+		preOrder(raiz);
 	}
 }
