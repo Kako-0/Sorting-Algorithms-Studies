@@ -9,7 +9,7 @@ public class RBTree<Key extends Comparable<Key>, Value>
         public Value valor;
         public Node esq, dir;
 
-        boolean cor;
+        boolean cor = BLACK;
         int size;
 
         Node(Key key, Value value, int size, boolean color) {
@@ -64,7 +64,7 @@ public class RBTree<Key extends Comparable<Key>, Value>
         no.dir = novaRaiz.esq;
         novaRaiz.esq = no;
 
-        novaRaiz.cor = no.cor;
+		novaRaiz.cor = no.cor;
         no.cor = RED;
 
         novaRaiz.size = no.size;
@@ -138,22 +138,39 @@ public class RBTree<Key extends Comparable<Key>, Value>
 		h.size = size(h.esq) + size(h.dir) + 1;
 		return h;
 	}
+	private Double count(Node tree) {
+		if(tree != null) {
+			double redCount = 0;
+			if (tree.cor == RED) {
+				redCount++;
+			}
+            redCount += count(tree.esq);
+            redCount += count(tree.dir);
+			return redCount;
+		}
+		return 0.0;
+    }
+	public void count(){
+		String resultado = String.format("%.2f", (count(raiz) * 100) / raiz.size);
+		System.out.println("Porcentagem de nós vermelhos: "+resultado+"%");
+	}
+	
+	private void preOrder(Node tree) {
+		if(tree != null) {
+            System.out.println(toString(tree));
+            preOrder(tree.esq);
+            preOrder(tree.dir);
+        }
+    }
+	public void preOrder(){
+		preOrder(raiz);
+	}
 
-	// private void preOrder(Node tree) {
-	// 	if(tree != null) {
-    //         System.out.println(toString(tree));
-    //         preOrder(tree.esq);
-    //         preOrder(tree.dir);
-    //     }
-    // }
-	// public void preOrder(){
-	// 	preOrder(raiz);
-	// }
-
-	// public String toString(Node h) {
-	// 	return "Node{" +
-	// 			"color=" + h.cor +
-	// 			", key=" + h.chave +
-	// 			'}';
-	// }
+	public String toString(Node h) {
+		return "Node{" +
+				"color=" + h.cor +
+				", key=" + h.chave +
+				", size=" + h.size +
+				'}';
+	}
 }
