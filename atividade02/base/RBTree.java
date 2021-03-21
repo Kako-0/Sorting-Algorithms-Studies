@@ -24,13 +24,13 @@ public class RBTree<Key extends Comparable<Key>, Value>
     protected Node raiz;
 
 	private boolean isRed(Node h) {
-		if (h == null) return false;
+		if (h == null) return BLACK;
         return (h.cor == RED);
 	}
 	
 	private boolean isBlack(Node h) {
-		// Implementar método que verifica se o nó é preto
-		return false;
+		if (h == null) return BLACK;
+        return (h.cor == RED);
 	}
 	
 	public int size() {
@@ -99,6 +99,11 @@ public class RBTree<Key extends Comparable<Key>, Value>
 	}
 	private void trocaCor(Node h) {
 		// Implementar método que troca as cores.
+		//Usando o ! fica mais fácil trocas múltiplas
+		//Pois !true == false e vice-versa
+		h.cor = !h.cor;
+        h.esq.cor = !h.esq.cor;
+        h.dir.cor = !h.dir.cor;
 	}
 	
 	
