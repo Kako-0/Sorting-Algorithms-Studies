@@ -38,5 +38,38 @@ public class HashWithLinkedList<Key, Value> {
 		return (key.hashCode() & 0x7fffffff) % M; 
 	}
 
-	
+	public boolean contains(Key key) {
+		if (key == null) {
+			throw new IllegalArgumentException("Argument to contains() cannot be null");
+		}
+
+		int i = hash(key);
+		if (keys[i].equals(key))
+			return true;
+		return false;
+	}
+
+	/**
+	 * Insere um novo objeto no Hash 
+	 * @param key
+	 * @param vals2
+	 */
+	public void put(Key key, Value vals2) {
+		int i = hash(key);
+
+		keys[i] = key;
+
+		LinkedList<Value> items = vals[i];
+		if(items == null) {
+			items = new LinkedList<Value>();
+
+			items.add(vals2);
+
+			vals[i] = items;
+		}
+		else {
+			vals[i].add(vals2);
+		}
+		N++;
+	}
 }
