@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Transform<Key extends Comparable<Key>, Value>{
-    private AVLTree avl = new AVLTree<>();
-    private RBTree rb = new RBTree<>();
+    private AVLTree<Key,Value> avl = new AVLTree<>();
+    private RBTree<Key,Value> rb = new RBTree<>();
     private ArrayList<Key> aKeys = new ArrayList<Key>();
     private ArrayList<Value> aValues = new ArrayList<Value>();
     protected class Node {
@@ -20,12 +20,12 @@ public class Transform<Key extends Comparable<Key>, Value>{
         }
     }
 
-    public RBTree receiveRB(RBTree tree){
+    public RBTree<Key,Value> receiveRB(RBTree<Key,Value> tree){
         rb = tree;
         return rb;
     }
 
-    private void giveForArrays(RBTree.Node tree){
+    private void giveForArrays(RBTree<Key,Value>.Node tree){
         if (tree == null)
             return; 
 
