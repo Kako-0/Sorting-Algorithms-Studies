@@ -155,22 +155,27 @@ public class RBTree<Key extends Comparable<Key>, Value>
 		System.out.println("Porcentagem de nós vermelhos: "+resultado+"%");
 	}
 	
-	private void preOrder(Node tree) {
-		if(tree != null) {
-            System.out.println(toString(tree));
-            preOrder(tree.esq);
-            preOrder(tree.dir);
-        }
+	public void print() {
+        this.print(raiz, "", 0);
     }
-	public void preOrder(){
-		preOrder(raiz);
-	}
 
-	public String toString(Node h) {
-		return "Node{" +
-				"color=" + h.cor +
-				", key=" + h.chave +
-				", size=" + h.size +
-				'}';
-	}
+    private void print(Node node, String prefix, int depth) {
+        if (node == null) {
+            return;
+        }
+        for (int i = 0; i < node.size; i++) {
+            System.out.print("  ");
+        }
+        if (!prefix.equals("")) {
+            System.out.print(prefix);
+            System.out.print(":");
+        }
+        System.out.print(node.chave);
+        System.out.print(" (");
+        System.out.print("H:");
+        System.out.print(node.size+1);
+        System.out.println(")");
+        print(node.esq, "L", depth + 1);
+        print(node.dir, "R", depth + 1);
+    }
 }
