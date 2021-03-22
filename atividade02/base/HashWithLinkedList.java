@@ -72,4 +72,29 @@ public class HashWithLinkedList<Key, Value> {
 		}
 		N++;
 	}
+
+	/**
+	 * Remove um objeto do Hash
+	 * @param key
+	 */
+	public void delete(Key key, Value val)
+	{
+		if (key == null) 
+			throw new IllegalArgumentException("Argument to delete() cannot be null");
+		
+		if (!contains(key))
+			return;
+			
+		int i = hash(key);
+		
+		//Deleta da tabela
+		keys[i] = null;
+		for(int j = 0 ; j < vals[i].size() ; j++){
+			if (val.equals(vals[i].get(j))) {
+				vals[i].remove(val);
+			}
+		}
+
+		N--;
+	}
 }
