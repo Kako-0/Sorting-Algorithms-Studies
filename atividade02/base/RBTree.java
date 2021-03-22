@@ -28,6 +28,7 @@ public class RBTree<Key extends Comparable<Key>, Value>
         return (h.cor == RED);
 	}
 	
+	@SuppressWarnings("unused")
 	private boolean isBlack(Node h) {
 		if (h == null) return true;
         return (h.cor == BLACK);
