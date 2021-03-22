@@ -138,9 +138,9 @@ public class RBTree<Key extends Comparable<Key>, Value>
 		h.size = size(h.esq) + size(h.dir) + 1;
 		return h;
 	}
-	private Double count(Node tree) {
+	private int count(Node tree) {
 		if(tree != null) {
-			double redCount = 0;
+			int redCount = 0;
 			if (tree.cor == RED) {
 				redCount++;
 			}
@@ -148,7 +148,7 @@ public class RBTree<Key extends Comparable<Key>, Value>
             redCount += count(tree.dir);
 			return redCount;
 		}
-		return 0.0;
+		return 0;
     }
 	public void count(){
 		String resultado = String.format("%.2f", (count(raiz) * 100) / raiz.size);
