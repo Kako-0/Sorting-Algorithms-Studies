@@ -97,4 +97,43 @@ public class HashWithLinkedList<Key, Value> {
 
 		N--;
 	}
+
+	/**
+	 * Busca um objeto no Hash
+	 * @param key
+	 * @return
+	 */
+	public void get(Key key, Value val) {
+		int i = hash(key);
+		if(key == null)
+			System.out.println("Key not found");
+
+		LinkedList<Value> items = vals[i];
+
+		if(items == null)
+			System.out.println("Value not found");
+
+
+		for(Value item : items) {
+			if(item.equals(val))
+				System.out.println("Value: "+item+" of key "+key);
+		}
+		System.out.println("Key or Value not found");
+	}
+	public void get(Key key) {
+		int i = hash(key);
+		if(key == null)
+			System.out.println("Key not found");
+
+		LinkedList<Value> items = vals[i];
+
+		if(items == null)
+			System.out.println("Key not found");
+
+		System.out.println("Value's key");
+		for(Value item : items) {
+			System.out.print(item+" ");
+		}
+		System.out.println();
+	}
 }
