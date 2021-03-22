@@ -75,7 +75,7 @@ public class AVLTree<Key extends Comparable<Key>, Value> {
 
         no.altura = 1 + Math.max(altura(no.esq), altura(no.dir));
         newRoot.altura = 1 + Math.max(altura(newRoot.esq), altura(newRoot.dir));
-        
+
         return newRoot;
     }
 
@@ -139,7 +139,7 @@ public class AVLTree<Key extends Comparable<Key>, Value> {
      */
     private int fatorBalanceamento(Node no) {
         //IMPLEMENTAR
-    	return 0;
+    	return altura(no.esq) - altura(no.dir);
     }
 
     public Value get(Key chave) {
@@ -195,4 +195,27 @@ public class AVLTree<Key extends Comparable<Key>, Value> {
         return isAVL(no.esq) && isAVL(no.dir);
     }
 
+    public void print() {
+        this.print(raiz, "", 0);
+    }
+
+    private void print(Node node, String prefix, int depth) {
+        if (node == null) {
+            return;
+        }
+        for (int i = 0; i < depth; i++) {
+            System.out.print("  ");
+        }
+        if (!prefix.equals("")) {
+            System.out.print(prefix);
+            System.out.print(":");
+        }
+        System.out.print(node.chave);
+        System.out.print(" (");
+        System.out.print("H:");
+        System.out.print(node.altura+1);
+        System.out.println(")");
+        print(node.esq, "L", depth + 1);
+        print(node.dir, "R", depth + 1);
+    }
 }
