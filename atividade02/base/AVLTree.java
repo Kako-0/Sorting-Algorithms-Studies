@@ -177,7 +177,7 @@ public class AVLTree<Key extends Comparable<Key>, Value> {
     public void delete(Key chave) {
     }
     	
-
+    @SuppressWarnings("unused")
     private boolean isAVL() {
         return isAVL(raiz);
     }
