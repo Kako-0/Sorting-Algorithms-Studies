@@ -134,7 +134,7 @@ public class HashWithDeleteMod<Key, Value> {
 	 */
 	public Value get(Key key) {
 		for (int i = hash(key); keys[i] != null; i = (i + 1) % M)
-			if (keys[i].equals(key))
+			if (keys[i].equals(key) && hasSomeone[i]==true)
 				return vals[i];
 		return null;
 	}
