@@ -51,6 +51,7 @@ public class HashWithDeleteMod<Key, Value> {
 				t.put(keys[i], vals[i]);
 		keys = t.keys;
 		vals = t.vals;
+		hasSomeone = t.hasSomeone;
 		M = t.M;
 		
 	}
