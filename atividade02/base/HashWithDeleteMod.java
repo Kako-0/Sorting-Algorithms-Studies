@@ -135,4 +135,15 @@ public class HashWithDeleteMod<Key, Value> {
 				return vals[i];
 		return null;
 	}
+
+	public void showBooWithKeys(){
+		for (Boolean boolean1 : hasSomeone) {
+			System.out.print(boolean1+" ");
+		}
+		System.out.println();
+		for (Key b : keys) {
+			System.out.print(b+" ");
+		}
+		System.out.println();
+	}
 }
