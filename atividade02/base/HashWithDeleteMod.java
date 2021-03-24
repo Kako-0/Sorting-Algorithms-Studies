@@ -106,18 +106,16 @@ public class HashWithDeleteMod<Key, Value> {
 		while (!key.equals(keys[i]))
 			i = (i + 1) % M;
 		
-		//Deleta da tabela
-		keys[i] = null;
-		vals[i] = null;
+		//"Deleta" da tabela
+		hasSomeone[i] = false;
 		//Pega o próximo índice para verificar se possue o mesmo hash
 		i = (i + 1) % M;
 		
 		//Algoritmo que deleta fisicamente e decrementa as keys na tabela se possível
-		while (keys[i] != null){
+		while (hasSomeone[i] != false){
 			Key keyToRedo = keys[i];
 			Value valToRedo = vals[i];
-			keys[i] = null;
-			vals[i] = null;
+			hasSomeone[i] = false;
 			N--;
 			put(keyToRedo, valToRedo);
 			i = (i + 1) % M;
