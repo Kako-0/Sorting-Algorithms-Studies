@@ -78,11 +78,13 @@ public class HashWithDeleteMod<Key, Value> {
 			//quando a key for igual a keys[i], atribue o value no value[i]
 			//Essa função sobrescreve o value caso a keys sejam iguais
 			if (keys[i].equals(key)) { 
-				vals[i] = val; 
+				vals[i] = val;
+				hasSomeone[i] = true; 
 				return; 
 			}
 		keys[i] = key;
 		vals[i] = val;
+		hasSomeone[i] = true;
 		N++;
 	}
 	
