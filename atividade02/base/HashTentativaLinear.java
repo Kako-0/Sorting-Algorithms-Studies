@@ -87,13 +87,11 @@ public class HashTentativaLinear<Key, Value> {
 		int h1;
 		// (k mod (M - 1)) + 1		
 		int h2 = hash2(key) + 1;
-		//Incrementa + 1 caso o segundo hashing for par
-		int k = (h2 % 2 == 0) ? h2 + 1 : h2; 
 
 		if (N >= M/2) 
 			resize(2*M); // double M
 		
-		for (h1 = hash(key); keys[h1] != null; h1 = (h1 + i * k) % M){
+		for (h1 = hash(key); keys[h1] != null; h1 = (h1 + i * h2) % M){
 			i++;
 			if (keys[h1].equals(key)) { 
 				vals[h1] = val; 
