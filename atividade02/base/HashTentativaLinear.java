@@ -82,13 +82,6 @@ public class HashTentativaLinear<Key, Value> {
 		return (key.hashCode() & 0x7fffffff) % (M - 1); 
 	}
 
-	//Verifica se o tamanho da tabela hash é potência de 2
-	private boolean isPow2(int m){
-		double pow2 = (Math.log10(m) / Math.log10(2));
-		int interpow = (int) pow2;
-		return pow2 == interpow;
-	}
-
 	public void putDuplo(Key key, Value val) {
 		//Verifica restrições, se false não se faz o método
 		if(!isPow2(M)) {
