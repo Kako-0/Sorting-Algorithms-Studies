@@ -1,6 +1,6 @@
 public class AVLTree<Key extends Comparable<Key>, Value> {
 
-    private class Node {
+    protected class Node {
         Key chave;
         Value valor;
         Node esq, dir;
@@ -17,7 +17,7 @@ public class AVLTree<Key extends Comparable<Key>, Value> {
         }
     }
 
-    private Node raiz;
+    protected Node raiz;
 
     public int tamanho() {
         return tamanho(raiz);
