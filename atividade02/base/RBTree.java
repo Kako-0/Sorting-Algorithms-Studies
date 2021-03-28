@@ -152,7 +152,8 @@ public class RBTree<Key extends Comparable<Key>, Value>
 		return 0;
     }
 	public void count(){
-		String resultado = String.format("%.2f", (count(raiz) * 100) / raiz.size);
+		double count  = (count(raiz) * 100) / raiz.size;
+		String resultado = String.format("%.2f", count);
 		System.out.println("Porcentagem de nós vermelhos: "+resultado+"%");
 	}
 	
@@ -164,7 +165,7 @@ public class RBTree<Key extends Comparable<Key>, Value>
         if (node == null) {
             return;
         }
-        for (int i = 0; i < node.size; i++) {
+        for (int i = 0; i < (raiz.size - node.size); i++) {
             System.out.print("  ");
         }
         if (!prefix.equals("")) {
