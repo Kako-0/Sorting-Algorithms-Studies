@@ -130,10 +130,17 @@ public class HashWithLinkedList<Key, Value> {
 		if(items == null)
 			System.out.println("Key not found");
 
-		System.out.println("Value's key");
+		//System.out.println("Value's key");
 		for(Value item : items) {
 			System.out.print(item+" ");
 		}
 		System.out.println();
+	}
+
+	public void print() {
+		System.out.println("Tabela hash:");
+		for (Key key : keys) {
+			get(key);
+		}
 	}
 }
