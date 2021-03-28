@@ -83,27 +83,27 @@ public class Transform<Key extends Comparable<Key>, Value>{
     //     print(no.dir, "R", depth + 1);
     // }
 
-    public void printavl() {
-        this.printavl(avl.raiz, "", 0);
-    }
+    // public void printavl() {
+    //     this.printavl(avl.raiz, "", 0);
+    // }
 
-    private void printavl(AVLTree.Node node, String prefix, int depth) {
-        if (node == null) {
-            return;
-        }
-        for (int i = 0; i < depth; i++) {
-            System.out.print("  ");
-        }
-        if (!prefix.equals("")) {
-            System.out.print(prefix);
-            System.out.print(":");
-        }
-        System.out.print(node.chave);
-        System.out.print(" (");
-        System.out.print("H:");
-        System.out.print(node.altura+1);
-        System.out.println(")");
-        printavl(node.esq, "L", depth + 1);
-        printavl(node.dir, "R", depth + 1);
-    }
+    // private void printavl(AVLTree.Node node, String prefix, int depth) {
+    //     if (node == null) {
+    //         return;
+    //     }
+    //     for (int i = 0; i < depth; i++) {
+    //         System.out.print("  ");
+    //     }
+    //     if (!prefix.equals("")) {
+    //         System.out.print(prefix);
+    //         System.out.print(":");
+    //     }
+    //     System.out.print(node.chave);
+    //     System.out.print(" (");
+    //     System.out.print("H:");
+    //     System.out.print(node.altura+1);
+    //     System.out.println(")");
+    //     printavl(node.esq, "L", depth + 1);
+    //     printavl(node.dir, "R", depth + 1);
+    // }
 }
