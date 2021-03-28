@@ -20,9 +20,11 @@ public class Transform<Key extends Comparable<Key>, Value>{
         }
     }
 
-    public RBTree<Key,Value> receiveRB(RBTree<Key,Value> tree){
+    public AVLTree<Key,Value> receiveRB(RBTree<Key,Value> tree){
         rb = tree;
-        return rb;
+        giveForArrays();
+        putOnAVL();
+        return avl;
     }
 
     private void giveForArrays(RBTree<Key,Value>.Node tree){
@@ -35,12 +37,12 @@ public class Transform<Key extends Comparable<Key>, Value>{
         giveForArrays(tree.esq);
         giveForArrays(tree.dir);
     }
-    public void giveForArrays(){
+    private void giveForArrays(){
         giveForArrays(rb.raiz);
     }
 
-    public void putOnAVL(){
-        for (int i = 0; i < rb.raiz.size-1; i++) {
+    private void putOnAVL(){
+        for (int i = 0; i < rb.raiz.size; i++) {
             avl.put(aKeys.get(i), aValues.get(i));
         }
     }
@@ -81,27 +83,27 @@ public class Transform<Key extends Comparable<Key>, Value>{
     //     print(no.dir, "R", depth + 1);
     // }
 
-    // public void printavl() {
-    //     this.printavl(avl.raiz, "", 0);
-    // }
+    public void printavl() {
+        this.printavl(avl.raiz, "", 0);
+    }
 
-    // private void printavl(AVLTree.Node node, String prefix, int depth) {
-    //     if (node == null) {
-    //         return;
-    //     }
-    //     for (int i = 0; i < depth; i++) {
-    //         System.out.print("  ");
-    //     }
-    //     if (!prefix.equals("")) {
-    //         System.out.print(prefix);
-    //         System.out.print(":");
-    //     }
-    //     System.out.print(node.chave);
-    //     System.out.print(" (");
-    //     System.out.print("H:");
-    //     System.out.print(node.altura+1);
-    //     System.out.println(")");
-    //     printavl(node.esq, "L", depth + 1);
-    //     printavl(node.dir, "R", depth + 1);
-    // }
+    private void printavl(AVLTree.Node node, String prefix, int depth) {
+        if (node == null) {
+            return;
+        }
+        for (int i = 0; i < depth; i++) {
+            System.out.print("  ");
+        }
+        if (!prefix.equals("")) {
+            System.out.print(prefix);
+            System.out.print(":");
+        }
+        System.out.print(node.chave);
+        System.out.print(" (");
+        System.out.print("H:");
+        System.out.print(node.altura+1);
+        System.out.println(")");
+        printavl(node.esq, "L", depth + 1);
+        printavl(node.dir, "R", depth + 1);
+    }
 }
