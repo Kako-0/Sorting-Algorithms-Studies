@@ -139,7 +139,7 @@ public class HashWithDeleteMod<Key, Value> {
 
 	public void showBooWithKeys(){
 		for (Boolean boolean1 : hasSomeone) {
-			System.out.print(boolean1+" ");
+			System.out.print(boolean1+"| ");
 		}
 		System.out.println();
 		for (Key b : keys) {
