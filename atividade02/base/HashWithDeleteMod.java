@@ -111,7 +111,6 @@ public class HashWithDeleteMod<Key, Value> {
 		//Pega o próximo índice para verificar se possue o mesmo hash
 		i = (i + 1) % M;
 		
-		//Algoritmo que deleta fisicamente e decrementa as keys na tabela se possível
 		while (hasSomeone[i] != false){
 			Key keyToRedo = keys[i];
 			Value valToRedo = vals[i];
