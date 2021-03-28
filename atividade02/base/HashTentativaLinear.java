@@ -85,11 +85,12 @@ public class HashTentativaLinear<Key, Value> {
 	public void putDuplo(Key key, Value val) {
 		int i = 0;
 		int h1;
-		// (k mod (M - 1)) + 1		
-		int h2 = hash2(key) + 1;
-
+		
 		if (N >= M/2) 
 			resize(2*M); // double M
+		
+		// (k mod (M - 1)) + 1		
+		int h2 = hash2(key) + 1;
 		
 		for (h1 = hash(key); keys[h1] != null; h1 = (h1 + i * h2) % M){
 			i++;
@@ -151,5 +152,13 @@ public class HashTentativaLinear<Key, Value> {
 			if (keys[i].equals(key))
 				return vals[i];
 		return null;
+	}
+
+	public void print() {
+		System.out.println("Tabela hash:");
+		for (Key key : keys) {
+			System.out.print(key+" ");
+		}
+		System.out.println();
 	}
 }
