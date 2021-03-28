@@ -175,7 +175,11 @@ public class RBTree<Key extends Comparable<Key>, Value>
         System.out.print(node.chave);
         System.out.print(" (");
         System.out.print("H:");
-        System.out.print(node.size+1);
+        System.out.print(node.size);
+        System.out.print(")");
+		System.out.print(" (");
+        System.out.print("C:");
+        System.out.print(isRed(node) ? "RED" : "BLACK");
         System.out.println(")");
         print(node.esq, "L", depth + 1);
         print(node.dir, "R", depth + 1);
