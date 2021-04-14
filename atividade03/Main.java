@@ -7,5 +7,7 @@ public class Main {
       grafo.getGraph("dados");
       grafo.showTxt();
 
+      //grafo.howMuch(); 
+      grafo.showList();
    }
 }
