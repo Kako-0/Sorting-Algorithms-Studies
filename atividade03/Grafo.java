@@ -32,7 +32,7 @@ public class Grafo<Value extends Comparable<Value>> {
         receiveGraph(tam);
         br.close();
     }
-
+    
     public void showTxt(){
         System.out.println("Tamanho de vértices: "+tam);
         int a = 0;
@@ -49,4 +49,14 @@ public class Grafo<Value extends Comparable<Value>> {
         System.out.println(fifo.size()-(tam+1));
     }
 
+    public void showList(){
+        System.out.println(fifo.size());
+        for (int i = 0; i < graph.length; i++) {
+            System.out.print(i+1+": ");
+            for (Value value : graph[i]) {
+                System.out.print(1+" ");
+            }
+            System.out.println();
+        }
+    }
 }
