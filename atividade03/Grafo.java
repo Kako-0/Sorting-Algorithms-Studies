@@ -29,6 +29,9 @@ public class Grafo<Value extends Comparable<Value>> {
             this.destino = destino;
         }
     }
+    private List<Vertice> vertices;
+    private List<Aresta> arestas;
+    
     private ArrayList<Value> fifo = new ArrayList<Value>();
     private LinkedList<Value> graph[];
     private int tam;
