@@ -97,4 +97,11 @@ public class Grafo<Value extends Comparable<Value>> {
         vertices.add(v);
         return v;
     }
+
+    private Aresta addAresta(Vertice origem, Vertice destino) {
+        Aresta e = new Aresta(origem, destino);
+        origem.addAdj(e);
+        arestas.add(e);
+        return e;
+    }
 }
