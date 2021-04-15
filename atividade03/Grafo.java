@@ -19,6 +19,16 @@ public class Grafo<Value extends Comparable<Value>> {
             adj.add(e);
         }
     }
+
+    private class Aresta {
+        private Vertice origem;
+        private Vertice destino;
+
+        Aresta(Vertice origem, Vertice destino) {
+            this.origem = origem;
+            this.destino = destino;
+        }
+    }
     private ArrayList<Value> fifo = new ArrayList<Value>();
     private LinkedList<Value> graph[];
     private int tam;
