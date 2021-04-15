@@ -3,8 +3,22 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Grafo<Value extends Comparable<Value>> {
+    private class Vertice {
+        private String nome;
+        private List<Aresta> adj;
+
+        private Vertice(String nome) {
+            this.nome = nome;
+            this.adj = new ArrayList<Aresta>();
+        }
+
+        private void addAdj(Aresta e) {
+            adj.add(e);
+        }
+    }
     private ArrayList<Value> fifo = new ArrayList<Value>();
     private LinkedList<Value> graph[];
     private int tam;
