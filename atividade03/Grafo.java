@@ -91,4 +91,10 @@ public class Grafo<Value extends Comparable<Value>> {
             System.out.println();
         }
     }
+
+    private Vertice addVertice(String nome) {
+        Vertice v = new Vertice(nome);
+        vertices.add(v);
+        return v;
+    }
 }
