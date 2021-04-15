@@ -31,10 +31,15 @@ public class Grafo<Value extends Comparable<Value>> {
     }
     private List<Vertice> vertices;
     private List<Aresta> arestas;
-    
+
     private ArrayList<Value> fifo = new ArrayList<Value>();
     private LinkedList<Value> graph[];
     private int tam;
+
+    public Grafo() {
+        vertices = new ArrayList<Vertice>();
+        arestas = new ArrayList<Aresta>();
+    }
 
     @SuppressWarnings("unchecked")
     private void receiveGraph(int tam){
