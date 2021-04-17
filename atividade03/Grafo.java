@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Grafo<Value extends Comparable<Value>> {
@@ -90,10 +89,6 @@ public class Grafo<Value extends Comparable<Value>> {
                 System.out.println();
             }
         }
-    }
-
-    public void howMuch(){
-        System.out.println(fifo.size()-(tam+1));
     }
 
     public void showList(){
