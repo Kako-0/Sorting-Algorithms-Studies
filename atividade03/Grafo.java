@@ -32,7 +32,6 @@ public class Grafo<Value extends Comparable<Value>> {
     private List<Vertice> vertices;
     private List<Aresta> arestas;
 
-    private ArrayList<Value> fifo = new ArrayList<Value>();
     private LinkedList<Value> graph[];
     private int tam;
 
@@ -40,7 +39,7 @@ public class Grafo<Value extends Comparable<Value>> {
         vertices = new ArrayList<Vertice>();
         arestas = new ArrayList<Aresta>();
     }
-    
+
     public void getGraph(String txt) throws IOException{
         BufferedReader br = new BufferedReader(new FileReader(txt+".txt"));
         tam = Integer.parseInt(br.readLine());
