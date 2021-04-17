@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Grafo<Value extends Comparable<Value>> {
+public class Grafo{
     private class Vertice {
         private String nome;
         private List<Aresta> adj;
@@ -22,9 +22,9 @@ public class Grafo<Value extends Comparable<Value>> {
     private class Aresta {
         private Vertice origem;
         private Vertice destino;
-        private Double peso;
+        private double peso;
 
-        Aresta(Vertice origem, Vertice destino, Double peso) {
+        Aresta(Vertice origem, Vertice destino, double peso) {
             this.origem = origem;
             this.destino = destino;
             this.peso = peso;
@@ -89,7 +89,7 @@ public class Grafo<Value extends Comparable<Value>> {
             r += u.nome + " -> ";
             for (Aresta e : u.adj) {
                 Vertice v = e.destino;
-                r += v.nome + ", ";
+                r += v.nome + "("+e.peso+"), ";
             }
             r += "\n";
         }
