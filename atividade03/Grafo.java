@@ -40,14 +40,6 @@ public class Grafo<Value extends Comparable<Value>> {
         vertices = new ArrayList<Vertice>();
         arestas = new ArrayList<Aresta>();
     }
-
-    @SuppressWarnings("unchecked")
-    private void receiveGraph(int tam){
-        graph = new LinkedList[tam];
-        for (int i = 0; i < tam; i++) {
-            graph[i] = new LinkedList<Value>();
-        }
-    }
     
     public void getGraph(String txt) throws IOException{
         BufferedReader br = new BufferedReader(new FileReader(txt+".txt"));
