@@ -93,16 +93,17 @@ public class Grafo<Value extends Comparable<Value>> {
         return r;
     } 
 
-    public void showList(){
-        System.out.println(fifo.size());
-        for (int i = 0; i < graph.length; i++) {
-            System.out.print(i+1+": ");
-            for (Value value : graph[i]) {
-                System.out.print(1+" ");
-            }
-            System.out.println();
-        }
-    }
+    // Atualizar Metodo
+    // public void showList(){
+    //     System.out.println(fifo.size());
+    //     for (int i = 0; i < graph.length; i++) {
+    //         System.out.print(i+1+": ");
+    //         for (Value value : graph[i]) {
+    //             System.out.print(1+" ");
+    //         }
+    //         System.out.println();
+    //     }
+    // }
 
     private Vertice addVertice(String nome) {
         Vertice v = new Vertice(nome);
