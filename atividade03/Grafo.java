@@ -32,7 +32,6 @@ public class Grafo<Value extends Comparable<Value>> {
     private List<Vertice> vertices;
     private List<Aresta> arestas;
 
-    private LinkedList<Value> graph[];
     private int tam;
 
     public Grafo() {
