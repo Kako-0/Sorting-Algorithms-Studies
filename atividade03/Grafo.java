@@ -48,20 +48,45 @@ public class Grafo<Value extends Comparable<Value>> {
             graph[i] = new LinkedList<Value>();
         }
     }
-    @SuppressWarnings("unchecked")
+    
     public void getGraph(String txt) throws IOException{
         BufferedReader br = new BufferedReader(new FileReader(txt+".txt"));
-        
+        tam = Integer.parseInt(br.readLine());
+        labelWhile:
         while(br.ready()){ 
             String linha = br.readLine();
             String aLinha[] = linha.split(" ");
+            if (aLinha.length == 2) {
+                String linhaIndice0 = aLinha[0];
+                String linhaIndice1 = aLinha[1];
+                
+                if(vertices.isEmpty()){
+                    Vertice aux1 = addVertice(linhaIndice0);
+                    Vertice aux2 = addVertice(linhaIndice1);;
+                    addAresta(aux1, aux2);
+                    continue labelWhile;
+                }
 
-            for (Value a : (Value[]) aLinha) {
-                fifo.add(a);
-            }   
+                
+                for (int i = 0; i < vertices.size(); i++) {
+                    if(vertices.get(i).nome.equals(linhaIndice0)){
+                        for (Vertice v : vertices) {
+                            if(v.nome.equals(linhaIndice1)){
+                                addAresta(vertices.get(i), v);
+                                continue labelWhile;
+                            }
+                        }
+                        Vertice aux1 = addVertice(linhaIndice1);
+                        addAresta(vertices.get(i), aux1);
+                        continue labelWhile;
+                    }
+                }
+                Vertice aux1 = addVertice(linhaIndice0);
+                Vertice aux2 = new Vertice(linhaIndice1);
+                addAresta(aux1, aux2);
+            }  
         }
-        tam = Integer.parseInt((String)fifo.remove(0));
-        receiveGraph(tam);
+        
         br.close();
     }
     
