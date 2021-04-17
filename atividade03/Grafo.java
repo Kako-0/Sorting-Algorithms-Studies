@@ -22,10 +22,12 @@ public class Grafo<Value extends Comparable<Value>> {
     private class Aresta {
         private Vertice origem;
         private Vertice destino;
+        private Double peso;
 
-        Aresta(Vertice origem, Vertice destino) {
+        Aresta(Vertice origem, Vertice destino, Double peso) {
             this.origem = origem;
             this.destino = destino;
+            this.peso = peso;
         }
     }
     private List<Vertice> vertices;
@@ -45,14 +47,15 @@ public class Grafo<Value extends Comparable<Value>> {
         while(br.ready()){ 
             String linha = br.readLine();
             String aLinha[] = linha.split(" ");
-            if (aLinha.length == 2) {
+            double linhaPeso = (aLinha.length == 3) ? Double.parseDouble(aLinha[2]) : 0.0;
+            if (aLinha.length >= 2 && aLinha.length <= 3) {
                 String linhaIndice0 = aLinha[0];
                 String linhaIndice1 = aLinha[1];
                 
                 if(vertices.isEmpty()){
                     Vertice aux1 = addVertice(linhaIndice0);
                     Vertice aux2 = addVertice(linhaIndice1);;
-                    addAresta(aux1, aux2);
+                    addAresta(aux1, aux2, linhaPeso);
                     continue labelWhile;
                 }
 
@@ -61,19 +64,19 @@ public class Grafo<Value extends Comparable<Value>> {
                     if(vertices.get(i).nome.equals(linhaIndice0)){
                         for (Vertice v : vertices) {
                             if(v.nome.equals(linhaIndice1)){
-                                addAresta(vertices.get(i), v);
+                                addAresta(vertices.get(i), v, linhaPeso);
                                 continue labelWhile;
                             }
                         }
                         Vertice aux1 = addVertice(linhaIndice1);
-                        addAresta(vertices.get(i), aux1);
+                        addAresta(vertices.get(i), aux1, linhaPeso);
                         continue labelWhile;
                     }
                 }
                 Vertice aux1 = addVertice(linhaIndice0);
                 Vertice aux2 = new Vertice(linhaIndice1);
-                addAresta(aux1, aux2);
-            }  
+                addAresta(aux1, aux2, linhaPeso);
+            }
         }
         
         br.close();
@@ -111,8 +114,8 @@ public class Grafo<Value extends Comparable<Value>> {
         return v;
     }
 
-    private Aresta addAresta(Vertice origem, Vertice destino) {
-        Aresta e = new Aresta(origem, destino);
+    private Aresta addAresta(Vertice origem, Vertice destino, Double peso) {
+        Aresta e = new Aresta(origem, destino, peso);
         origem.addAdj(e);
         arestas.add(e);
         return e;
