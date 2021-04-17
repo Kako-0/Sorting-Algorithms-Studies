@@ -79,6 +79,19 @@ public class Grafo<Value extends Comparable<Value>> {
         br.close();
     }
     
+    public String toString() {
+        String r = "";
+        System.out.println("Tamanho de vértices: "+tam);
+        for (Vertice u : vertices) {
+            r += u.nome + " -> ";
+            for (Aresta e : u.adj) {
+                Vertice v = e.destino;
+                r += v.nome + ", ";
+            }
+            r += "\n";
+        }
+        return r;
+    } 
 
     public void showList(){
         System.out.println(fifo.size());
