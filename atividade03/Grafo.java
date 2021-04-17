@@ -79,17 +79,6 @@ public class Grafo<Value extends Comparable<Value>> {
         br.close();
     }
     
-    public void showTxt(){
-        System.out.println("Tamanho de vértices: "+tam);
-        int a = 0;
-        for (Value val : fifo) {
-            System.out.print(val + " ");
-            a++;
-            if (a % 2 == 0) {
-                System.out.println();
-            }
-        }
-    }
 
     public void showList(){
         System.out.println(fifo.size());
