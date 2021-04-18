@@ -135,4 +135,44 @@ public class Grafo{
         return e;
     }
 
+//------------------BUSCA-EM-LARGURA---------------------------------------    
+    public	ArrayList<Aresta> buscaEmLargura(String origem, String destino){
+
+    	ArrayList<Aresta> arvoreLargura = new ArrayList<Aresta>();
+        for (Vertice v : vertices) {
+            v.cor = "branco";
+        }
+        Vertice aux = getVertice(origem);
+    	aux.setCor("cinza");
+    	
+    	LinkedList<Vertice> queue= new LinkedList<Vertice>();
+    	queue.add(aux);
+    	boolean achou = false;
+    	while (!queue.isEmpty()) {
+    		Vertice current = queue.remove();
+    		current.setCor("preto");
+    		if (current.nome.equals(destino)) {
+    			achou = true;
+    			break;
+    		}
+    		
+    		for (Aresta aresta : current.adj) {
+                Vertice vizinho = aresta.destino;
+    			if(vizinho.cor.equals("branco")){
+    				vizinho.setCor("cinza");
+    				queue.add(vizinho);
+                    
+    				arvoreLargura.add(aresta);
+    			}
+    		}
+    	}
+    	
+    	if (achou) {
+    		System.out.println("Vertice encontrado");
+    	} else {
+    		System.out.println("Vertice nao encontrado");
+    	}
+    	
+    	return arvoreLargura;
+    }
 }
