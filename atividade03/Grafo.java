@@ -46,6 +46,14 @@ public class Grafo{
         arestas = new ArrayList<Aresta>();
     }
 
+    private Vertice getVertice(String vertice){
+        for (Vertice v : vertices) {
+            if(v.nome.equals(vertice))
+                return v;
+        }
+        return null;
+    }
+
     public void getGraph(String txt) throws IOException{
         BufferedReader br = new BufferedReader(new FileReader(txt+".txt"));
         tam = Integer.parseInt(br.readLine());
