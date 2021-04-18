@@ -136,7 +136,7 @@ public class Grafo{
     }
 
 //------------------BUSCA-EM-LARGURA---------------------------------------    
-    public	ArrayList<Aresta> buscaEmLargura(String origem, String destino){
+    public	int buscaEmLargura(String origem, String destino){
 
     	ArrayList<Aresta> arvoreLargura = new ArrayList<Aresta>();
         for (Vertice v : vertices) {
@@ -172,7 +172,6 @@ public class Grafo{
     	} else {
     		System.out.println("Vertice nao encontrado");
     	}
-    	
-    	return arvoreLargura;
+    	return arvoreLargura.size();
     }
 }
