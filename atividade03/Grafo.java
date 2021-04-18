@@ -2,12 +2,14 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Grafo{
     private class Vertice {
         private String nome;
         private List<Aresta> adj;
+        private String cor = "branco";
 
         private Vertice(String nome) {
             this.nome = nome;
@@ -16,6 +18,10 @@ public class Grafo{
 
         private void addAdj(Aresta e) {
             adj.add(e);
+        }
+
+        public void setCor(String cor) {
+            this.cor = cor;
         }
     }
 
@@ -120,4 +126,5 @@ public class Grafo{
         arestas.add(e);
         return e;
     }
+
 }
