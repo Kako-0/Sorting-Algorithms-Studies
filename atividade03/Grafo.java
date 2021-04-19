@@ -136,7 +136,7 @@ public class Grafo{
     }
 
 //------------------BUSCA-EM-LARGURA---------------------------------------    
-    public	int buscaEmLargura(String origem, String destino){
+    private	ArrayList<Aresta> buscaEmLargura(String origem, String destino){
 
     	ArrayList<Aresta> arvoreLargura = new ArrayList<Aresta>();
         for (Vertice v : vertices) {
@@ -172,6 +172,19 @@ public class Grafo{
     	} else {
     		System.out.println("Vertice nao encontrado");
     	}
-    	return arvoreLargura.size();
+    	return arvoreLargura;
+    }
+
+    public int numArestaBFS(String origem, String destino){
+        return buscaEmLargura(origem, destino).size();
+    }
+
+    public void caminhoBFS(String origem, String destino){
+        ArrayList<Aresta> caminho = buscaEmLargura(origem, destino);
+
+        for (Aresta aresta : caminho) {
+            System.out.print("("+aresta.origem.nome+", "+aresta.destino.nome+"), ");
+        }
+        System.out.println();
     }
 }
