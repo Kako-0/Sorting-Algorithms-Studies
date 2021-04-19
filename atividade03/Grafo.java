@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -183,6 +185,24 @@ public class Grafo{
         ArrayList<Aresta> caminho = buscaEmLargura(origem, destino);
 
         for (Aresta aresta : caminho) {
+            System.out.print("("+aresta.origem.nome+", "+aresta.destino.nome+"), ");
+        }
+        System.out.println();
+        Vertice vDest = getVertice(destino);
+        ArrayList<Aresta> ans = new ArrayList<Aresta>();
+        labelWhile:
+        while (!vDest.nome.equals(origem)) {
+            for (Aresta aresta : caminho) {
+                if (aresta.destino.nome.equals(vDest.nome)) {
+                    ans.add(aresta);
+                    vDest = aresta.origem;
+                    continue labelWhile;
+                }
+            }
+        }
+
+        Collections.reverse(ans);
+        for (Aresta aresta : ans) {
             System.out.print("("+aresta.origem.nome+", "+aresta.destino.nome+"), ");
         }
         System.out.println();
