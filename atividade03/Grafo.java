@@ -12,6 +12,7 @@ public class Grafo{
         private List<Aresta> adj;
         private String cor = "branco";
         private int distancia = 0;
+        private boolean visitado = false;
 
         private Vertice(String nome) {
             this.nome = nome;
@@ -22,12 +23,16 @@ public class Grafo{
             adj.add(e);
         }
 
-        public void setCor(String cor) {
+        private void setCor(String cor) {
             this.cor = cor;
         }
 
-        public void setDistancia(int distancia) {
+        private void setDistancia(int distancia) {
             this.distancia = distancia;
+        }
+
+        private boolean isVisitado() {
+            return visitado;
         }
     }
 
@@ -41,6 +46,10 @@ public class Grafo{
             this.origem = origem;
             this.destino = destino;
             this.peso = peso;
+        }
+
+        public boolean isVisitado() {
+            return visitado;
         }
     }
     private List<Vertice> vertices;
