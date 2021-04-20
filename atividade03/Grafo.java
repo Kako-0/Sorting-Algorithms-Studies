@@ -212,5 +212,23 @@ public class Grafo{
         System.out.println();
     }
 
-
+    public void distanciaBFS(String origem, String destino, int distancia){
+        ArrayList<Aresta> caminho = buscaEmLargura(origem, destino);
+        Vertice vDest = getVertice(origem);
+        int maxDist = 0;
+        
+        for (Aresta aresta : caminho) {
+            vDest = aresta.destino;
+            //vDest.distancia = aresta.origem.distancia + 1;
+            vDest.setDistancia( aresta.origem.distancia + 1 );
+            maxDist = vDest.distancia;
+        }
+        int dist = distancia >= maxDist ? maxDist : distancia;
+        for (Aresta aresta : caminho) {
+            if (aresta.destino.distancia <= dist) {
+                System.out.print("("+aresta.destino.nome+"), ");    
+            }
+        }
+        System.out.println();
+    }
 }
