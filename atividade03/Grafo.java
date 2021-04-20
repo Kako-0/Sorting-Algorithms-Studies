@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,6 +11,7 @@ public class Grafo{
         private String nome;
         private List<Aresta> adj;
         private String cor = "branco";
+        private int distancia = 0;
 
         private Vertice(String nome) {
             this.nome = nome;
@@ -24,6 +24,10 @@ public class Grafo{
 
         public void setCor(String cor) {
             this.cor = cor;
+        }
+
+        public void setDistancia(int distancia) {
+            this.distancia = distancia;
         }
     }
 
@@ -207,4 +211,6 @@ public class Grafo{
         }
         System.out.println();
     }
+
+
 }
