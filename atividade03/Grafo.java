@@ -35,6 +35,7 @@ public class Grafo{
         private Vertice origem;
         private Vertice destino;
         private double peso;
+        private boolean visitado = false;
 
         Aresta(Vertice origem, Vertice destino, double peso) {
             this.origem = origem;
@@ -231,4 +232,6 @@ public class Grafo{
         }
         System.out.println();
     }
+
+
 }
