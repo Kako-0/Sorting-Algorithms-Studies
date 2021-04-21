@@ -7,12 +7,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Grafo{
-    private class Vertice {
+    private class Vertice implements Comparable<Vertice> {
         private String nome;
         private List<Aresta> adj;
         private String cor = "branco";
-        private int distancia = 0;
+        private double distancia = 0;
         private boolean visitado = false;
+        private Vertice pai;
 
         private Vertice(String nome) {
             this.nome = nome;
@@ -27,8 +28,12 @@ public class Grafo{
             this.cor = cor;
         }
 
-        private void setDistancia(int distancia) {
+        private void setDistancia(double distancia) {
             this.distancia = distancia;
+        }
+
+        private void setPai(Vertice pai){
+            this.pai = pai;
         }
 
         private boolean isVisitado() {
@@ -37,6 +42,16 @@ public class Grafo{
         
         private void setVisitado(boolean visitado){
             this.visitado = visitado;
+        }
+
+        @Override
+        public int compareTo(Vertice vertice) {
+            if(this.distancia < vertice.distancia) 
+        	    return -1;
+            else if(this.distancia == vertice.distancia) 
+        	    return 0;
+
+            return 1;  
         }
     }
 
@@ -294,5 +309,105 @@ public class Grafo{
     		return true;
     	}
     	return false;
+    }
+
+    //----------------------DIJKSTRA-------------------------------------------
+	
+	//metodo que retorna o caminho menos custoso entre dois vertices a partid do algoritmo de Dijkstra
+    public ArrayList<Vertice> encontrarMenorCaminhoDijkstra(String origem, String destino) {
+        // Pega os respectivos vertices no grafo;
+        Vertice v1 = getVertice(origem);
+        Vertice v2 = getVertice(destino);
+        // Lista que guarda os vertices pertencentes ao menor caminho encontrado
+    	ArrayList<Vertice> menorCaminho = new ArrayList<Vertice>();
+        // Variavel que recebe os vertices pertencentes ao menor caminho
+        Vertice verticeCaminho;
+        // Variavel que guarda o vertice que esta sendo visitado
+        Vertice atual;
+        // Variavel que marca o vizinho do vertice atualmente visitado
+        Vertice vizinho;
+        // Aresta que liga o atual ao seu vizinho;
+        Aresta ligacao;
+        // Lista dos vertices que ainda nao foram visitados
+        ArrayList<Vertice> naoVisitados = new ArrayList<Vertice>();
+        // Algoritmo de Dijkstra
+    	// Adiciona a origem na lista do menor caminho
+        menorCaminho.add(v1);
+        // Colocando a distancias iniciais 
+        for (int i = 0; i < vertices.size(); i++) {
+            // Vertice atual tem distancia zero, e todos os outros,
+            // 9999("infinita")
+            if (vertices.get(i).nome.equals(v1.nome))
+                vertices.get(i).setDistancia(0);
+            else
+                vertices.get(i).setDistancia(9999);
+            // Insere o vertice na lista de vertices nao visitados
+            naoVisitados.add(vertices.get(i));
+        }
+        Collections.sort(naoVisitados);
+        // O algoritmo continua ate que todos os vertices sejam visitados
+        while (!naoVisitados.isEmpty()) {
+            // O primeiro é sempre o que tem a menor distância
+            atual = naoVisitados.get(0);
+            /*
+             * Para cada aresta, calcula-se a sua possivel distancia, 
+             * somando a distancia do vertice atual com a da aresta
+             * correspondente. Se essa distancia for menor que a distancia do
+             * vizinho, ela é atualizada.
+             */
+            for (int i = 0; i < atual.adj.size(); i++) {
+                vizinho = atual.adj.get(i).destino;
+                if (!vizinho.isVisitado()) {    	
+                    // Comparando a distância do vizinho com a possível
+                    // distância
+                	ligacao = atual.adj.get(i);
+                    if (vizinho.distancia > (atual.distancia + ligacao.peso)) {
+                        vizinho.setDistancia(atual.distancia + ligacao.peso);
+                        vizinho.setPai(atual);
+                        /*
+                         * Se o vizinho é o vertice procurado, e foi feita uma
+                         * mudança na distancia, a lista com o menor caminho
+                         * anterior é apagada, pois existe um caminho menor do
+                         * vertices pais, até a vertice origem.
+                         */
+                        if (vizinho == v2) {
+                            menorCaminho.clear();
+                            verticeCaminho = vizinho;
+                            menorCaminho.add(vizinho);
+                            while (verticeCaminho.pai != null) {
+                                menorCaminho.add(verticeCaminho.pai);
+                                verticeCaminho = verticeCaminho.pai;
+
+                            }
+                            // Ordena a lista do menor caminho, para que ele
+                            // seja exibido da origem ao destino.
+                            Collections.sort(menorCaminho);
+                        }
+                    }
+                }
+            }
+            // Marca o vertice atual como visitado e o retira da lista de nao
+            // visitados
+            atual.setVisitado(true);
+            naoVisitados.remove(atual);
+            /*
+             * Ordena a lista, para que o vertice com menor distancia fique na
+             * primeira posicao
+             */
+            Collections.sort(naoVisitados);
+        }
+        // Reseta os pais de todos os vertices
+        for (Vertice vertice : vertices) {
+            vertice.setPai(null);
+        }
+        return menorCaminho;
+    }
+    public void caminhodijkstra(String o, String d){
+        ArrayList<Vertice> caminho = encontrarMenorCaminhoDijkstra(o, d);
+
+        for (Vertice aresta : caminho) {
+            System.out.print("("+aresta.nome+"), ");
+        }
+        System.out.println();
     }
 }
