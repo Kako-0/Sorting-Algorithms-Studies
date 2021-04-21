@@ -34,6 +34,10 @@ public class Grafo{
         private boolean isVisitado() {
             return visitado;
         }
+        
+        private void setVisitado(boolean visitado){
+            this.visitado = visitado;
+        }
     }
 
     private class Aresta {
@@ -50,6 +54,10 @@ public class Grafo{
 
         public boolean isVisitado() {
             return visitado;
+        }
+
+        public void setVisitado(boolean visitado) {
+            this.visitado = visitado;
         }
     }
     private List<Vertice> vertices;
@@ -242,5 +250,49 @@ public class Grafo{
         System.out.println();
     }
 
+    public void caminhodfs(String o, String d){
+        ArrayList<Aresta> caminho = buscaProfundidade(o, d);
 
+        for (Aresta aresta : caminho) {
+            System.out.print("("+aresta.origem.nome+", "+aresta.destino.nome+"), ");
+        }
+        System.out.println();
+    }
+    private ArrayList<Aresta> buscaProfundidade(String origem, String destino){
+        ArrayList<Aresta> arvoreProfundidade = new ArrayList<Aresta>(); 
+    	
+    	if(this.buscaRecursiva(origem, destino))
+    		System.out.println("Vertice encontrado");
+    	else
+    		System.out.println("Vertice nao encontrado");
+    	
+    	for (int i=0; i<this.arestas.size(); i++){
+    		if(this.arestas.get(i).isVisitado())
+    			arvoreProfundidade.add(this.arestas.get(i));
+    	}
+    	
+    	return arvoreProfundidade;
+    }
+    //metodo recursivo que retorna um booleano como resposta da busca pelo vertice e seta como true os vertices e arestas que estarao na arvore de Busca em Profundidade
+    private boolean buscaRecursiva(String raiz, String buscado){
+		
+    	Vertice aux = getVertice(raiz);
+        aux.setVisitado(true);
+		
+    	if (!raiz.equals(buscado)){
+    		for(int i = 0; i < aux.adj.size(); i++){
+    			
+    			if (!aux.adj.get(i).destino.isVisitado()){
+	    			//acha aresta entre eles e seta como visitada
+	    			aux.adj.get(i).setVisitado(true);
+	    			//continua busca recursivamente
+	    			if (buscaRecursiva(aux.adj.get(i).destino.nome, buscado))
+	    				return true;
+	    		}
+	    	}
+    	}else{
+    		return true;
+    	}
+    	return false;
+    }
 }
