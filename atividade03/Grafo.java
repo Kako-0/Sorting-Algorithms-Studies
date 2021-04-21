@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 public class Grafo{
     private class Vertice implements Comparable<Vertice> {
@@ -176,27 +177,34 @@ public class Grafo{
 
 //------------------BUSCA-EM-LARGURA---------------------------------------    
     private	ArrayList<Aresta> buscaEmLargura(String origem, String destino){
-
+        // Arraylist que retorna as arestas entre origem e destino
     	ArrayList<Aresta> arvoreLargura = new ArrayList<Aresta>();
+        // Reseta as cores
         for (Vertice v : vertices) {
             v.cor = "branco";
         }
+        // Pega o vertice do parametro e seta como cinza
         Vertice aux = getVertice(origem);
     	aux.setCor("cinza");
     	
+        // Adiciona na fila o vertice origem
     	LinkedList<Vertice> queue= new LinkedList<Vertice>();
     	queue.add(aux);
+        // Flag pra parar o while;
     	boolean achou = false;
     	while (!queue.isEmpty()) {
+            // Pega a primeira posicao da fila e seta como preto
     		Vertice current = queue.remove();
     		current.setCor("preto");
+            // Se o vertice pego da fila for igual ao destino, encerra o metodo
     		if (current.nome.equals(destino)) {
     			achou = true;
     			break;
     		}
-    		
+    		// Visita os vertices ligado ao vertice current
     		for (Aresta aresta : current.adj) {
                 Vertice vizinho = aresta.destino;
+                // Se for branco seta como cinza e adiciona na fila e tambem na arraylist de retorno
     			if(vizinho.cor.equals("branco")){
     				vizinho.setCor("cinza");
     				queue.add(vizinho);
@@ -214,32 +222,33 @@ public class Grafo{
     	return arvoreLargura;
     }
 
+    // Retorna quantas arestas existem entre origem e destino 
     public int numArestaBFS(String origem, String destino){
         return buscaEmLargura(origem, destino).size();
     }
 
+    // Printa na tela o caminho da origem pro destino
     public void caminhoBFS(String origem, String destino){
         ArrayList<Aresta> caminho = buscaEmLargura(origem, destino);
 
-        for (Aresta aresta : caminho) {
-            System.out.print("("+aresta.origem.nome+", "+aresta.destino.nome+"), ");
-        }
-        System.out.println();
+        // Pega o vertice escolhido
         Vertice vDest = getVertice(destino);
-        ArrayList<Aresta> ans = new ArrayList<Aresta>();
+        // Arralist do caminho
+        ArrayList<Aresta> caminhoOrder = new ArrayList<Aresta>();
+        // While faz um caminho inverso até chegar no vertice origem
         labelWhile:
         while (!vDest.nome.equals(origem)) {
             for (Aresta aresta : caminho) {
                 if (aresta.destino.nome.equals(vDest.nome)) {
-                    ans.add(aresta);
+                    caminhoOrder.add(aresta);
                     vDest = aresta.origem;
                     continue labelWhile;
                 }
             }
         }
-
-        Collections.reverse(ans);
-        for (Aresta aresta : ans) {
+        // Inverte a ordem para printar corretamente
+        Collections.reverse(caminhoOrder);
+        for (Aresta aresta : caminhoOrder) {
             System.out.print("("+aresta.origem.nome+", "+aresta.destino.nome+"), ");
         }
         System.out.println();
@@ -247,16 +256,20 @@ public class Grafo{
 
     public void distanciaBFS(String origem, String destino, int distancia){
         ArrayList<Aresta> caminho = buscaEmLargura(origem, destino);
+        // Pega o vertice escolhido
         Vertice vDest = getVertice(origem);
-        int maxDist = 0;
+        double maxDist = 0;
         
+        // For pra encontrar a maior distancia
         for (Aresta aresta : caminho) {
             vDest = aresta.destino;
             //vDest.distancia = aresta.origem.distancia + 1;
             vDest.setDistancia( aresta.origem.distancia + 1 );
             maxDist = vDest.distancia;
         }
-        int dist = distancia >= maxDist ? maxDist : distancia;
+        // Ternario pra agilizar o for adiante que printa os vertices
+        // até a distancia dada  
+        double dist = distancia >= maxDist ? maxDist : distancia;
         for (Aresta aresta : caminho) {
             if (aresta.destino.distancia <= dist) {
                 System.out.print("("+aresta.destino.nome+"), ");    
@@ -265,6 +278,7 @@ public class Grafo{
         System.out.println();
     }
 
+    // Caminho da busca em profundidade
     public void caminhodfs(String o, String d){
         ArrayList<Aresta> caminho = buscaProfundidade(o, d);
 
@@ -280,28 +294,32 @@ public class Grafo{
     		System.out.println("Vertice encontrado");
     	else
     		System.out.println("Vertice nao encontrado");
-    	
+    	// Adiciona no arrayList os vertices visitados
     	for (int i=0; i<this.arestas.size(); i++){
     		if(this.arestas.get(i).isVisitado())
     			arvoreProfundidade.add(this.arestas.get(i));
     	}
+        // Reseta os vertices
+        for (Vertice v : vertices) {
+            v.setVisitado(false);
+        }
     	
     	return arvoreProfundidade;
     }
     //metodo recursivo que retorna um booleano como resposta da busca pelo vertice e seta como true os vertices e arestas que estarao na arvore de Busca em Profundidade
-    private boolean buscaRecursiva(String raiz, String buscado){
-		
-    	Vertice aux = getVertice(raiz);
+    private boolean buscaRecursiva(String origem, String destino){
+		// Pega o vertice escolhido
+    	Vertice aux = getVertice(origem);
         aux.setVisitado(true);
 		
-    	if (!raiz.equals(buscado)){
+    	if (!origem.equals(destino)){
     		for(int i = 0; i < aux.adj.size(); i++){
     			
     			if (!aux.adj.get(i).destino.isVisitado()){
-	    			//acha aresta entre eles e seta como visitada
+	    			//seta como visitada a aresta
 	    			aux.adj.get(i).setVisitado(true);
 	    			//continua busca recursivamente
-	    			if (buscaRecursiva(aux.adj.get(i).destino.nome, buscado))
+	    			if (buscaRecursiva(aux.adj.get(i).destino.nome, destino))
 	    				return true;
 	    		}
 	    	}
@@ -309,6 +327,56 @@ public class Grafo{
     		return true;
     	}
     	return false;
+    }
+
+    public boolean buscaCiclo(String nome)
+    {
+        for (Vertice v : vertices) {
+            v.setDistancia(0);
+            v.setVisitado(false);
+        }
+        Stack<Vertice> pilha = new  Stack<Vertice>();
+        ArrayList<Vertice> auxV = new ArrayList<Vertice>();
+        Vertice aux = getVertice(nome);
+        double peso = 0;
+        int time = 0;
+        pilha.add(aux);
+        auxV.add(aux);
+        while (!pilha.isEmpty())
+        {
+            time += 1;
+            Vertice atual = pilha.pop();
+            if(!atual.visitado)
+            {
+                atual.setVisitado(true);
+                atual.setDistancia(atual.distancia + 1);
+            }
+ 
+            for (int i = 0; i < atual.adj.size(); i++) {
+                Vertice n = atual.adj.get(i).destino;
+                n.setDistancia(atual.adj.get(i).origem.distancia + 1);
+                
+                if (n.nome.equals(aux.nome) && time > 1) {
+                    System.out.println("é ciclo");
+                    System.out.println("peso: "+ peso);
+                    System.out.println("("+atual.adj.get(i).origem.nome+", "+atual.adj.get(i).destino.nome+")");
+                    
+                    for (Vertice aresta : auxV) {
+                        System.out.print("("+aresta.nome+"), ");
+                    }
+                    System.out.println();
+                    return true;
+                }
+                peso += atual.adj.get(i).peso;
+                if(n != null && !n.visitado)
+                {
+                    pilha.add(n);
+                    auxV.add(n);
+                }
+            }
+        }
+        System.out.println("sem ciclo");
+        return false;
     }
 
     //----------------------DIJKSTRA-------------------------------------------
