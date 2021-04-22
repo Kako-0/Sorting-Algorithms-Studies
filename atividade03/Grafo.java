@@ -1,3 +1,5 @@
+import estrutura.*;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,74 +10,6 @@ import java.util.List;
 import java.util.Stack;
 
 public class Grafo{
-    private class Vertice implements Comparable<Vertice> {
-        private String nome;
-        private List<Aresta> adj;
-        private String cor = "branco";
-        private double distancia = 0;
-        private boolean visitado = false;
-        private Vertice pai;
-
-        private Vertice(String nome) {
-            this.nome = nome;
-            this.adj = new ArrayList<Aresta>();
-        }
-
-        private void addAdj(Aresta e) {
-            adj.add(e);
-        }
-
-        private void setCor(String cor) {
-            this.cor = cor;
-        }
-
-        private void setDistancia(double distancia) {
-            this.distancia = distancia;
-        }
-
-        private void setPai(Vertice pai){
-            this.pai = pai;
-        }
-
-        private boolean isVisitado() {
-            return visitado;
-        }
-        
-        private void setVisitado(boolean visitado){
-            this.visitado = visitado;
-        }
-
-        @Override
-        public int compareTo(Vertice vertice) {
-            if(this.distancia < vertice.distancia) 
-        	    return -1;
-            else if(this.distancia == vertice.distancia) 
-        	    return 0;
-
-            return 1;  
-        }
-    }
-
-    private class Aresta {
-        private Vertice origem;
-        private Vertice destino;
-        private double peso;
-        private boolean visitado = false;
-
-        Aresta(Vertice origem, Vertice destino, double peso) {
-            this.origem = origem;
-            this.destino = destino;
-            this.peso = peso;
-        }
-
-        public boolean isVisitado() {
-            return visitado;
-        }
-
-        public void setVisitado(boolean visitado) {
-            this.visitado = visitado;
-        }
-    }
     private List<Vertice> vertices;
     private List<Aresta> arestas;
 
@@ -88,7 +22,7 @@ public class Grafo{
 
     private Vertice getVertice(String vertice){
         for (Vertice v : vertices) {
-            if(v.nome.equals(vertice))
+            if(v.getNome().equals(vertice))
                 return v;
         }
         return null;
@@ -115,9 +49,9 @@ public class Grafo{
 
                 
                 for (int i = 0; i < vertices.size(); i++) {
-                    if(vertices.get(i).nome.equals(linhaIndice0)){
+                    if(vertices.get(i).getNome().equals(linhaIndice0)){
                         for (Vertice v : vertices) {
-                            if(v.nome.equals(linhaIndice1)){
+                            if(v.getNome().equals(linhaIndice1)){
                                 addAresta(vertices.get(i), v, linhaPeso);
                                 continue labelWhile;
                             }
@@ -140,27 +74,15 @@ public class Grafo{
         String r = "";
         System.out.println("Tamanho de vértices: "+tam);
         for (Vertice u : vertices) {
-            r += u.nome + " -> ";
-            for (Aresta e : u.adj) {
-                Vertice v = e.destino;
-                r += v.nome + "("+e.peso+"), ";
+            r += u.getNome() + " -> ";
+            for (Aresta e : u.getAdj()) {
+                Vertice v = e.getDestino();
+                r += v.getNome() + "("+e.getPeso()+"), ";
             }
             r += "\n";
         }
         return r;
     } 
-
-    // Atualizar Metodo
-    // public void showList(){
-    //     System.out.println(fifo.size());
-    //     for (int i = 0; i < graph.length; i++) {
-    //         System.out.print(i+1+": ");
-    //         for (Value value : graph[i]) {
-    //             System.out.print(1+" ");
-    //         }
-    //         System.out.println();
-    //     }
-    // }
 
     private Vertice addVertice(String nome) {
         Vertice v = new Vertice(nome);
@@ -181,7 +103,7 @@ public class Grafo{
     	ArrayList<Aresta> arvoreLargura = new ArrayList<Aresta>();
         // Reseta as cores
         for (Vertice v : vertices) {
-            v.cor = "branco";
+            v.setCor("branco");
         }
         // Pega o vertice do parametro e seta como cinza
         Vertice aux = getVertice(origem);
@@ -197,15 +119,15 @@ public class Grafo{
     		Vertice current = queue.remove();
     		current.setCor("preto");
             // Se o vertice pego da fila for igual ao destino, encerra o metodo
-    		if (current.nome.equals(destino)) {
+    		if (current.getNome().equals(destino)) {
     			achou = true;
     			break;
     		}
     		// Visita os vertices ligado ao vertice current
-    		for (Aresta aresta : current.adj) {
-                Vertice vizinho = aresta.destino;
+    		for (Aresta aresta : current.getAdj()) {
+                Vertice vizinho = aresta.getDestino();
                 // Se for branco seta como cinza e adiciona na fila e tambem na arraylist de retorno
-    			if(vizinho.cor.equals("branco")){
+    			if(vizinho.getCor().equals("branco")){
     				vizinho.setCor("cinza");
     				queue.add(vizinho);
                     
@@ -237,11 +159,11 @@ public class Grafo{
         ArrayList<Aresta> caminhoOrder = new ArrayList<Aresta>();
         // While faz um caminho inverso até chegar no vertice origem
         labelWhile:
-        while (!vDest.nome.equals(origem)) {
+        while (!vDest.getNome().equals(origem)) {
             for (Aresta aresta : caminho) {
-                if (aresta.destino.nome.equals(vDest.nome)) {
+                if (aresta.getDestino().getNome().equals(vDest.getNome())) {
                     caminhoOrder.add(aresta);
-                    vDest = aresta.origem;
+                    vDest = aresta.getOrigem();
                     continue labelWhile;
                 }
             }
@@ -249,7 +171,7 @@ public class Grafo{
         // Inverte a ordem para printar corretamente
         Collections.reverse(caminhoOrder);
         for (Aresta aresta : caminhoOrder) {
-            System.out.print("("+aresta.origem.nome+", "+aresta.destino.nome+"), ");
+            System.out.print("("+aresta.getOrigem().getNome()+", "+aresta.getDestino().getNome()+"), ");
         }
         System.out.println();
     }
@@ -262,17 +184,17 @@ public class Grafo{
         
         // For pra encontrar a maior distancia
         for (Aresta aresta : caminho) {
-            vDest = aresta.destino;
+            vDest = aresta.getDestino();
             //vDest.distancia = aresta.origem.distancia + 1;
-            vDest.setDistancia( aresta.origem.distancia + 1 );
-            maxDist = vDest.distancia;
+            vDest.setDistancia( aresta.getOrigem().getDistancia() + 1 );
+            maxDist = vDest.getDistancia();
         }
         // Ternario pra agilizar o for adiante que printa os vertices
         // até a distancia dada  
         double dist = distancia >= maxDist ? maxDist : distancia;
         for (Aresta aresta : caminho) {
-            if (aresta.destino.distancia <= dist) {
-                System.out.print("("+aresta.destino.nome+"), ");    
+            if (aresta.getDestino().getDistancia() <= dist) {
+                System.out.print("("+aresta.getDestino().getNome()+"), ");    
             }
         }
         System.out.println();
@@ -283,7 +205,7 @@ public class Grafo{
         ArrayList<Aresta> caminho = buscaProfundidade(o, d);
 
         for (Aresta aresta : caminho) {
-            System.out.print("("+aresta.origem.nome+", "+aresta.destino.nome+"), ");
+            System.out.print("("+aresta.getOrigem().getNome()+", "+aresta.getDestino().getNome()+"), ");
         }
         System.out.println();
     }
@@ -313,13 +235,13 @@ public class Grafo{
         aux.setVisitado(true);
 		
     	if (!origem.equals(destino)){
-    		for(int i = 0; i < aux.adj.size(); i++){
+    		for(int i = 0; i < aux.getAdj().size(); i++){
     			
-    			if (!aux.adj.get(i).destino.isVisitado()){
+    			if (!aux.getAdj().get(i).getDestino().isVisitado()){
 	    			//seta como visitada a aresta
-	    			aux.adj.get(i).setVisitado(true);
+	    			aux.getAdj().get(i).setVisitado(true);
 	    			//continua busca recursivamente
-	    			if (buscaRecursiva(aux.adj.get(i).destino.nome, destino))
+	    			if (buscaRecursiva(aux.getAdj().get(i).getDestino().getNome(), destino))
 	    				return true;
 	    		}
 	    	}
@@ -346,29 +268,29 @@ public class Grafo{
         {
             time += 1;
             Vertice atual = pilha.pop();
-            if(!atual.visitado)
+            if(!atual.isVisitado())
             {
                 atual.setVisitado(true);
-                atual.setDistancia(atual.distancia + 1);
+                atual.setDistancia(atual.getDistancia() + 1);
             }
  
-            for (int i = 0; i < atual.adj.size(); i++) {
-                Vertice n = atual.adj.get(i).destino;
-                n.setDistancia(atual.adj.get(i).origem.distancia + 1);
+            for (int i = 0; i < atual.getAdj().size(); i++) {
+                Vertice n = atual.getAdj().get(i).getDestino();
+                n.setDistancia(atual.getAdj().get(i).getOrigem().getDistancia() + 1);
                 
-                if (n.nome.equals(aux.nome) && time > 1) {
+                if (n.getNome().equals(aux.getNome()) && time > 1) {
                     System.out.println("é ciclo");
                     System.out.println("peso: "+ peso);
-                    System.out.println("("+atual.adj.get(i).origem.nome+", "+atual.adj.get(i).destino.nome+")");
+                    System.out.println("("+atual.getAdj().get(i).getOrigem().getNome()+", "+atual.getAdj().get(i).getDestino().getNome()+")");
                     
                     for (Vertice aresta : auxV) {
-                        System.out.print("("+aresta.nome+"), ");
+                        System.out.print("("+aresta.getNome()+"), ");
                     }
                     System.out.println();
                     return true;
                 }
-                peso += atual.adj.get(i).peso;
-                if(n != null && !n.visitado)
+                peso += atual.getAdj().get(i).getPeso();
+                if(n != null && !n.isVisitado())
                 {
                     pilha.add(n);
                     auxV.add(n);
@@ -405,7 +327,7 @@ public class Grafo{
         for (int i = 0; i < vertices.size(); i++) {
             // Vertice atual tem distancia zero, e todos os outros,
             // 9999("infinita")
-            if (vertices.get(i).nome.equals(v1.nome))
+            if (vertices.get(i).getNome().equals(v1.getNome()))
                 vertices.get(i).setDistancia(0);
             else
                 vertices.get(i).setDistancia(9999);
@@ -423,14 +345,14 @@ public class Grafo{
              * correspondente. Se essa distancia for menor que a distancia do
              * vizinho, ela é atualizada.
              */
-            for (int i = 0; i < atual.adj.size(); i++) {
-                vizinho = atual.adj.get(i).destino;
+            for (int i = 0; i < atual.getAdj().size(); i++) {
+                vizinho = atual.getAdj().get(i).getDestino();
                 if (!vizinho.isVisitado()) {    	
                     // Comparando a distância do vizinho com a possível
                     // distância
-                	ligacao = atual.adj.get(i);
-                    if (vizinho.distancia > (atual.distancia + ligacao.peso)) {
-                        vizinho.setDistancia(atual.distancia + ligacao.peso);
+                	ligacao = atual.getAdj().get(i);
+                    if (vizinho.getDistancia() > (atual.getDistancia() + ligacao.getPeso())) {
+                        vizinho.setDistancia(atual.getDistancia() + ligacao.getPeso());
                         vizinho.setPai(atual);
                         /*
                          * Se o vizinho é o vertice procurado, e foi feita uma
@@ -442,9 +364,9 @@ public class Grafo{
                             menorCaminho.clear();
                             verticeCaminho = vizinho;
                             menorCaminho.add(vizinho);
-                            while (verticeCaminho.pai != null) {
-                                menorCaminho.add(verticeCaminho.pai);
-                                verticeCaminho = verticeCaminho.pai;
+                            while (verticeCaminho.getPai() != null) {
+                                menorCaminho.add(verticeCaminho.getPai());
+                                verticeCaminho = verticeCaminho.getPai();
 
                             }
                             // Ordena a lista do menor caminho, para que ele
@@ -474,7 +396,7 @@ public class Grafo{
         ArrayList<Vertice> caminho = encontrarMenorCaminhoDijkstra(o, d);
 
         for (Vertice aresta : caminho) {
-            System.out.print("("+aresta.nome+"), ");
+            System.out.print("("+aresta.getNome()+"), ");
         }
         System.out.println();
     }
