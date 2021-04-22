@@ -16,6 +16,27 @@ public class Vertice implements Comparable<Vertice> {
         this.setAdj(new ArrayList<Aresta>());
     }
 
+    public static boolean isDigraph(Vertice a, Vertice b){
+        String aNome = "";
+        String bNome = "";
+        // Procurando b na lista adj de a e vice versa 
+        for (int i = 0; i < a.adj.size(); i++) {
+            if (a.getAdj().get(i).getDestino().equals(b)) {
+                aNome = a.getAdj().get(i).getDestino().getNome();
+            }
+        }
+        for (int i = 0; i < b.adj.size(); i++) {
+            if (b.getAdj().get(i).getDestino().equals(a)) {
+                bNome = b.getAdj().get(i).getDestino().getNome();
+            }
+        }
+        // Se não for igual então é digrafo
+        if (!aNome.equals(bNome)) {
+            return true;
+        }
+        return false;
+    }
+
     public Vertice getPai() {
         return pai;
     }

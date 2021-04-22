@@ -250,50 +250,47 @@ public class Grafo{
     	}
     	return false;
     }
-
+    // Método do estático da classe vértice
+    private boolean isDigraph(Vertice a, Vertice b){
+        return Vertice.isDigraph(a, b);
+    }
+    // Procura ciclo
     public boolean buscaCiclo(String nome)
     {
+        //Reseta os vertices
         for (Vertice v : vertices) {
             v.setDistancia(0);
             v.setVisitado(false);
         }
+        // Cria pilha
         Stack<Vertice> pilha = new  Stack<Vertice>();
-        ArrayList<Vertice> auxV = new ArrayList<Vertice>();
+        // Pega o vertice escolhido
         Vertice aux = getVertice(nome);
-        double peso = 0;
-        int time = 0;
+        // Adiciona na pilha
         pilha.add(aux);
-        auxV.add(aux);
         while (!pilha.isEmpty())
         {
-            time += 1;
+            // Retira da pilha e atribui para o vertice atual
             Vertice atual = pilha.pop();
+            // Se esse vertice não foi visitado, passa a ser
             if(!atual.isVisitado())
             {
                 atual.setVisitado(true);
-                atual.setDistancia(atual.getDistancia() + 1);
             }
- 
+            // For que corre os vizinhos do vertice atual
             for (int i = 0; i < atual.getAdj().size(); i++) {
+                // Pega o vizinho
                 Vertice n = atual.getAdj().get(i).getDestino();
-                n.setDistancia(atual.getAdj().get(i).getOrigem().getDistancia() + 1);
                 
-                if (n.getNome().equals(aux.getNome()) && time > 1) {
+                // verifica se o vertice retorno é igual ao inicio
+                if (n.getNome().equals(aux.getNome()) && !isDigraph(aux, n)) {
                     System.out.println("é ciclo");
-                    System.out.println("peso: "+ peso);
-                    System.out.println("("+atual.getAdj().get(i).getOrigem().getNome()+", "+atual.getAdj().get(i).getDestino().getNome()+")");
-                    
-                    for (Vertice aresta : auxV) {
-                        System.out.print("("+aresta.getNome()+"), ");
-                    }
-                    System.out.println();
                     return true;
                 }
-                peso += atual.getAdj().get(i).getPeso();
+                // Se não foi visitado entra na pilha
                 if(n != null && !n.isVisitado())
                 {
                     pilha.add(n);
-                    auxV.add(n);
                 }
             }
         }
