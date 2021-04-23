@@ -107,6 +107,9 @@ public class Grafo{
         }
         // Pega o vertice do parametro e seta como cinza
         Vertice aux = getVertice(origem);
+        if (aux == null) {
+            return null;
+        }
     	aux.setCor("cinza");
     	
         // Adiciona na fila o vertice origem
@@ -140,21 +143,52 @@ public class Grafo{
     		System.out.println("Vertice encontrado");
     	} else {
     		System.out.println("Vertice nao encontrado");
+            return null;
     	}
     	return arvoreLargura;
     }
 
     // Retorna quantas arestas existem entre origem e destino 
     public int numArestaBFS(String origem, String destino){
-        return buscaEmLargura(origem, destino).size();
-    }
-
-    // Printa na tela o caminho da origem pro destino
-    public void caminhoBFS(String origem, String destino){
         ArrayList<Aresta> caminho = buscaEmLargura(origem, destino);
 
         // Pega o vertice escolhido
         Vertice vDest = getVertice(destino);
+        if (vDest == null) {
+            return 0;
+        }
+        // Arralist do caminho
+        ArrayList<Aresta> caminhoOrder = new ArrayList<Aresta>();
+        // While faz um caminho inverso até chegar no vertice origem
+        labelWhile:
+        while (!vDest.getNome().equals(origem)) {
+            for (Aresta aresta : caminho) {
+                if (aresta.getDestino().getNome().equals(vDest.getNome())) {
+                    caminhoOrder.add(aresta);
+                    vDest = aresta.getOrigem();
+                    if (vDest == null) {
+                        return 0;
+                    }
+                    continue labelWhile;
+                }
+            }
+        }
+        if (caminho == null) {
+            return 0;
+        }
+        return caminhoOrder.size();
+    }
+
+    // Printa na tela o caminho da origem pro destino
+    public boolean caminhoBFS(String origem, String destino){
+        ArrayList<Aresta> caminho = buscaEmLargura(origem, destino);
+
+        // Pega o vertice escolhido
+        Vertice vDest = getVertice(destino);
+        if (vDest == null) {
+            System.out.println("Sem caminho");
+            return false;
+        }
         // Arralist do caminho
         ArrayList<Aresta> caminhoOrder = new ArrayList<Aresta>();
         // While faz um caminho inverso até chegar no vertice origem
@@ -174,12 +208,17 @@ public class Grafo{
             System.out.print("("+aresta.getOrigem().getNome()+", "+aresta.getDestino().getNome()+"), ");
         }
         System.out.println();
+        return true;
     }
 
-    public void distanciaBFS(String origem, String destino, int distancia){
+    public boolean distanciaBFS(String origem, String destino, int distancia){
         ArrayList<Aresta> caminho = buscaEmLargura(origem, destino);
         // Pega o vertice escolhido
         Vertice vDest = getVertice(origem);
+        if (vDest == null) {
+            System.out.println("Sem caminho");
+            return false;
+        }
         double maxDist = 0;
         
         // For pra encontrar a maior distancia
@@ -198,6 +237,7 @@ public class Grafo{
             }
         }
         System.out.println();
+        return true;
     }
 
     // Caminho da busca em profundidade
@@ -232,6 +272,9 @@ public class Grafo{
     private boolean buscaRecursiva(String origem, String destino){
 		// Pega o vertice escolhido
     	Vertice aux = getVertice(origem);
+        if (aux == null) {
+            return false;
+        }
         aux.setVisitado(true);
 		
     	if (!origem.equals(destino)){
@@ -305,6 +348,9 @@ public class Grafo{
         // Pega os respectivos vertices no grafo;
         Vertice v1 = getVertice(origem);
         Vertice v2 = getVertice(destino);
+        if (v1 == null || v2 == null) {
+            return null;
+        }
         // Lista que guarda os vertices pertencentes ao menor caminho encontrado
     	ArrayList<Vertice> menorCaminho = new ArrayList<Vertice>();
         // Variavel que recebe os vertices pertencentes ao menor caminho
@@ -389,12 +435,16 @@ public class Grafo{
         }
         return menorCaminho;
     }
-    public void caminhodijkstra(String o, String d){
+    public boolean caminhodijkstra(String o, String d){
         ArrayList<Vertice> caminho = encontrarMenorCaminhoDijkstra(o, d);
-
+        if (caminho == null) {
+            System.out.println("Sem caminho");
+            return false;
+        }
         for (Vertice aresta : caminho) {
             System.out.print("("+aresta.getNome()+"), ");
         }
         System.out.println();
+        return true;
     }
 }
